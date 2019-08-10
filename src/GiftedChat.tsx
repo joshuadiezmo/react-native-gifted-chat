@@ -97,8 +97,6 @@ export interface GiftedChatProps<TMessage extends IMessage = IMessage> {
   forceGetKeyboardHeight?: boolean
   /* Force send button */
   alwaysShowSend?: boolean
-  /* Disable SafeAreaView */
-  disableSafeAreaView?: boolean
   /* Image style */
   imageStyle?: StyleProp<ViewStyle>
   /* This can be used to pass any data which needs to be re-rendered */
@@ -787,18 +785,10 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
     return null
   }
 
-  isDisabledSafeArea = () =>{
-      return this.props.disableSafeAreaView;
-  };
-
   render() {
-    let ContainerComponent = SafeAreaView;
-    if(this.isDisabledSafeArea()){
-      ContainerComponent = View;
-    }
     if (this.state.isInitialized === true) {
       return (
-        <ContainerComponent style={styles.safeArea}>
+        <SafeAreaView style={styles.safeArea}>
           <GiftedActionSheet
             ref={(component: any) => (this._actionSheetRef = component)}
           >
@@ -807,7 +797,7 @@ class GiftedChat<TMessage extends IMessage = IMessage> extends React.Component<
               {this.renderInputToolbar()}
             </View>
           </GiftedActionSheet>
-        </ContainerComponent>
+        </SafeAreaView>
       )
     }
     return (
